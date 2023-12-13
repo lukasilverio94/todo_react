@@ -70,6 +70,14 @@ export default class App extends Component {
     }));
   };
 
+  deleteTask = (itemToDelete) => {
+    this.setState((prevState) => ({
+      todoItems: prevState.todoItems.filter(
+        (item) => item.id !== itemToDelete.id
+      ),
+    }));
+  };
+
   todoRows = () =>
     this.state.todoItems.map((item) => {
       return (
@@ -77,11 +85,12 @@ export default class App extends Component {
           <td>{item.title}</td>
           <td>{item.description}</td>
           <td>
-            <input
-              type="checkbox"
-              checked={item.isCompleted}
-              className="form-check-input"
-            />
+            <button
+              className="btn btn-danger"
+              onClick={() => this.deleteTask(item)}
+            >
+              Delete
+            </button>
           </td>
         </tr>
       );
@@ -92,7 +101,9 @@ export default class App extends Component {
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h1 className="bg-danger text-white text-center py-2">Todo List</h1>
+            <h1 className="bg-dark bg-gradient  text-white text-center py-2">
+              Todo List
+            </h1>
           </div>
           {/* Inputs Create Todos */}
           <div className="col-12 my-4">
@@ -122,14 +133,14 @@ export default class App extends Component {
               </button>
             </form>
           </div>
-          <div className="col-12">
+          <div className="col-12 table-responsive">
             {/* TABLE */}
             <table className="table">
               <thead>
                 <tr>
                   <th>Task</th>
                   <th>Description</th>
-                  <th>Complete</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>{this.todoRows()}</tbody>
