@@ -3,11 +3,16 @@ import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 uuidv4();
 
+// Components
+import Header from "./components/Header";
+import TodoForm from "./components/TodoForm";
+import TodoTable from "./components/TodoTable";
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      userName: "Lucas",
       todoItems: [
         {
           id: uuidv4(),
@@ -100,52 +105,13 @@ export default class App extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-12">
-            <h1 className="bg-dark bg-gradient  text-white text-center py-2">
-              Todo List
-            </h1>
-          </div>
-          {/* Inputs Create Todos */}
-          <div className="col-12 my-4">
-            <form onSubmit={this.handleSubmit}>
-              <div className="mb-2">
-                <label htmlFor="title">Task: </label>
-                <input
-                  value={this.state.newTodo.title}
-                  name="title"
-                  className="form-control"
-                  id="title"
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="mb-2">
-                <label htmlFor="description">Description: </label>
-                <input
-                  value={this.state.newTodo.description}
-                  name="description"
-                  className="form-control"
-                  id="description"
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <button type="submit" className="btn btn-primary my-2">
-                Submit
-              </button>
-            </form>
-          </div>
-          <div className="col-12 table-responsive">
-            {/* TABLE */}
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Task</th>
-                  <th>Description</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>{this.todoRows()}</tbody>
-            </table>
-          </div>
+          <Header name={this.state.userName} />
+          <TodoForm
+            newTodo={this.state.newTodo}
+            handleSubmit={this.handleSubmit}
+            handleInputChange={this.handleInputChange}
+          />
+          <TodoTable displayTodos={this.todoRows} />
         </div>
       </div>
     );
